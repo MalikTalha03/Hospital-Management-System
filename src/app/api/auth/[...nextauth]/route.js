@@ -1,9 +1,9 @@
 import NextAuth from "next-auth";
-import EmailProvider from "next-auth/providers/email";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import { connectToDatabase } from "@/utils/db";
 import { verifyPassword } from "@/utils/auth";
 import { User } from "@/models/user";
+import CredentialsProvider from "next-auth/providers/credentials"; // Correct import
 
 const handler = NextAuth({
   session: {
@@ -19,11 +19,7 @@ const handler = NextAuth({
           throw new Error("No user found!");
         }
 
-        const isValid = await verifyPassword(
-          credentials.password,
-          user.password
-        );
-
+        const isValid = await verifyPassword(credentials.password, user.password);
         if (!isValid) {
           throw new Error("Could not log you in!");
         }
@@ -32,7 +28,6 @@ const handler = NextAuth({
       },
     }),
   ],
-  adapter: MongoDBAdapter(connectToDatabase),
   secret: process.env.SECRET,
   jwt: {
     encryption: true,
@@ -53,8 +48,8 @@ const handler = NextAuth({
     },
     async jwt({ token, user }) {
       if (user) {
-        token.uid = user.id; // Store the user's ID in the JWT for later use
-        token.email = user.email; // Optionally include more information
+        token.uid = user.id;
+        token.email = user.email;
       }
       return token;
     },
