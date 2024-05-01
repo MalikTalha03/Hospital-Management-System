@@ -1,18 +1,17 @@
 'use client';
 import { useState } from 'react';
-import Sidebar from '@/components/Sidebar'; // Import your Sidebar component
-import PatientsTable from '@/components/PatientTable'; // Import your PatientsTable component
+import Sidebar from '@/components/Sidebar'; 
+import PatientsTable from '@/components/PatientTable';
 
 export default function MainComponent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="flex h-screen bg-gray-100">
-      {/* Optional: Button to toggle sidebar on mobile views */}
       <button
         className="p-4 text-gray-600 focus:outline-none md:hidden"
         onClick={() => setSidebarOpen(!sidebarOpen)}
-      >
+      >     
         <svg
           className="w-6 h-6"
           fill="none"
