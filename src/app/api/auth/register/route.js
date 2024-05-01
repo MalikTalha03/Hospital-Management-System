@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { User } from '@/models/user';
 import { hashPassword } from '@/utils/auth';
 import { connectToDatabase } from '@/utils/db';
