@@ -1,23 +1,19 @@
-import mongoose from 'mongoose';
-
-const userSchema = new mongoose.Schema({
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    name: {
-        type: String,
-        required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
+class User {
+    constructor({ username, email, passwordHash }) {
+        this.username = username;
+        this.email = email;
+        this.passwordHash = passwordHash;  // Note: Storing passwords requires careful security considerations!
+        this.createdAt = new Date();
     }
-});
 
-export const User = mongoose.models.User || mongoose.model('User', userSchema);
+    toJson() {
+        return {
+            username: this.username,
+            email: this.email,
+            passwordHash: this.passwordHash,
+            createdAt: this.createdAt
+        };
+    }
+}
+
+// Usage would be similar to the Patient class
