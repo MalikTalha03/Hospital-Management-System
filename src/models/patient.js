@@ -1,34 +1,23 @@
-import mongoose from "mongoose";
-
-const patientSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    age: {
-        type: Number,
-        required: true
-    },
-    gender: {
-        type: String,
-        required: true
-    },
-    bloodGroup: {
-        type: String,
-        required: true
-    },
-    phone: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
+class Patient {
+    constructor({ name, age, gender, bloodGroup, phone, email }) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.bloodGroup = bloodGroup;
+        this.phone = phone;
+        this.email = email;
+        this.createdAt = new Date();
     }
-});
 
-export const Patient = mongoose.models.Patient || mongoose.model('Patient', patientSchema);
+    toJson() {
+        return {
+            name: this.name,
+            age: this.age,
+            gender: this.gender,
+            bloodGroup: this.bloodGroup,
+            phone: this.phone,
+            email: this.email,
+            createdAt: this.createdAt
+        };
+    }
+}
