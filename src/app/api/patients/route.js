@@ -1,14 +1,23 @@
-import { Patient } from "@/models/patient";
-import { connectToDatabase } from "@/utils/db";
+import { db } from '@/utils/db';  // Make sure Firebase is correctly initialized
 
-const handler = async function GET () {
-  await connectToDatabase();
-
+const handler = async function GET() {
   try {
-    const patients = await Patient.find();
-    return new Response(JSON.stringify(patients), { status: 200 });
+    const patientsRef = db.collection('patients');
+    const snapshot = await patientsRef.get();
+
+    if (snapshot.empty) {
+      return new Response("No patients found", { status: 404 });
+    }
+
+    const patients = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return new Response(JSON.stringify(patients), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return new Response(error.message, { status: 500 });
   }
 }
