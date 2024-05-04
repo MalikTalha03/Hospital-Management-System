@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { EditIcon, DeleteIcon } from "lucide-react";
+import { EditIcon, DeleteIcon, File } from "lucide-react";
 import AddPatientDialog from "@/components/AddpatientDialog";
 import EditPatientDialog from "./EditPatientDialog";
 
@@ -19,18 +19,34 @@ export default function PatientsTable() {
   const [patients, setPatients] = useState([]);
   const [pid, setPid] = useState("");
   const deletePatient = (id) => async () => {
+    console.log("delete", id);
     const confirmDelete = window.confirm("Are you sure you want to delete?");
     if (confirmDelete) {
-      await fetch(`/api/patients/${id}`, {
+      const response = await fetch(`/api/patients/${id}`, {
         method: "DELETE",
       });
+      if (response.ok) {
+        alert("Patient deleted successfully");
+      }
+      else {
+        alert("Failed to delete the patient ", error);
+      }
       fetchPatients();
     }
   };
   const fetchPatients = async () => {
-    const response = await fetch("/api/patients");
-    const data = await response.json();
-    setPatients(data);
+    try {
+      const response = await fetch("/api/patients");
+      const data = await response.json();
+      if (response.ok) {
+        setPatients(data);
+      }
+      if (response.status == 404) {
+        setPatients([]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
   useEffect(() => {
     fetchPatients();
@@ -65,9 +81,9 @@ export default function PatientsTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {patients &&
+            {patients && patients.length > 0 ? (
               patients.map((patient) => (
-                <TableRow key={patient._id}>
+                <TableRow key={patient.id}>
                   <TableCell>
                     <img
                       src={patient.image}
@@ -86,7 +102,7 @@ export default function PatientsTable() {
                       variant="icon"
                       className="text-blue-500 hover:text-blue-700"
                       onClick={() => {
-                        setPid(patient._id);
+                        setPid(patient.id);
                         setEditOpen(true);
                       }}
                     >
@@ -95,13 +111,29 @@ export default function PatientsTable() {
                     <Button
                       variant="icon"
                       className="text-red-500 hover:text-red-700"
-                      onClick={deletePatient(patient._id)}
+                      onClick={deletePatient(patient.id)}
                     >
                       <DeleteIcon />
                     </Button>
+                    <Button 
+                      variant="icon"
+                      className="text-green-500 hover:text-green-700"
+                      onClick={() => {
+                        window.location.href = `/patients/${patient.id}`;
+                      }}
+                    >
+                      <File />
+                    </Button>
                   </TableCell>
                 </TableRow>
-              ))}
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan="8" style={{ textAlign: "center" }}>
+                  No patients found
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </CardContent>
