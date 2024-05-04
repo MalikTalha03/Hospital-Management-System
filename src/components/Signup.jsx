@@ -58,7 +58,10 @@ export default function Signup() {
             name: `${values.firstName} ${values.lastName}`,
           }),
         });
-
+        if(response.status == 403){
+          setErrors({ submit: "User already exists" });
+          return;
+        }
         if (response.ok) {
           router.push("/");
         } else {
@@ -150,7 +153,7 @@ export default function Signup() {
           </form>
           <div className="mt-4 text-center text-sm">
             Already have an account?{" "}
-            <Link href="/signin" className="underline">
+            <Link href="/login" className="underline">
               Sign in
             </Link>
           </div>
