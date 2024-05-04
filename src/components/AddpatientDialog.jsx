@@ -12,7 +12,13 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+} from "@/components/ui/dropdown-menu";
 import axios from "axios";
 
 const validationSchema = yup.object({
@@ -69,17 +75,19 @@ const AddPatientDialog = ({ open, onClose }) => {
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              name="name"
-              onChange={formik.handleChange}
-              value={formik.values.name}
-            />
-            {formik.touched.name && formik.errors.name ? (
-              <div className="text-red-500 text-xs">{formik.errors.name}</div>
-            ) : null}
-            <div className="grid grid-cols-3 items-center gap-4">
+            <div className="grid grid-cols-2 items-center gap-4">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                name="name"
+                onChange={formik.handleChange}
+                value={formik.values.name}
+              />
+              {formik.touched.name && formik.errors.name ? (
+                <div className="text-red-500 text-xs">{formik.errors.name}</div>
+              ) : null}
+            </div>
+            <div className="grid grid-cols-2 items-center gap-4">
               <Label htmlFor="age">Age</Label>
               <Input
                 id="age"
@@ -92,7 +100,7 @@ const AddPatientDialog = ({ open, onClose }) => {
                 <div className="text-red-500 text-xs">{formik.errors.age}</div>
               ) : null}
             </div>
-            <div className="grid grid-cols-3 items-center gap-4">
+            <div className="grid grid-cols-2 items-center gap-4">
               <Label htmlFor="gender">Gender</Label>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -125,38 +133,70 @@ const AddPatientDialog = ({ open, onClose }) => {
                 </div>
               ) : null}
             </div>
-            <Label htmlFor="bloodGroup">Blood Group</Label>
-            <Input
-              id="bloodGroup"
-              name="bloodGroup"
-              onChange={formik.handleChange}
-              value={formik.values.bloodGroup}
-            />
-            {formik.touched.bloodGroup && formik.errors.bloodGroup ? (
-              <div className="text-red-500 text-xs">
-                {formik.errors.bloodGroup}
-              </div>
-            ) : null}
-            <Label htmlFor="phone">Phone Number</Label>
-            <Input
-              id="phone"
-              name="phone"
-              onChange={formik.handleChange}
-              value={formik.values.phone}
-            />
-            {formik.touched.phone && formik.errors.phone ? (
-              <div className="text-red-500 text-xs">{formik.errors.phone}</div>
-            ) : null}
-            <Label htmlFor="email">Email ID</Label>
-            <Input
-              id="email"
-              name="email"
-              onChange={formik.handleChange}
-              value={formik.values.email}
-            />
-            {formik.touched.email && formik.errors.email ? (
-              <div className="text-red-500 text-xs">{formik.errors.email}</div>
-            ) : null}
+            <div className="grid grid-cols-2 items-center gap-4">
+              <Label htmlFor="bloodGroup">Blood Group</Label>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline">
+                    {formik.values.bloodGroup || "Select Blood Group"}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                  <DropdownMenuRadioGroup
+                    value={formik.values.bloodGroup}
+                    onValueChange={(value) =>
+                      formik.setFieldValue("bloodGroup", value)
+                    }
+                  >
+                    <DropdownMenuRadioItem value="A+">A+</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="A-">A-</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="B+">B+</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="B-">B-</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="AB+">
+                      AB+
+                    </DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="AB-">
+                      AB-
+                    </DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="O+">O+</DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="O-">O-</DropdownMenuRadioItem>
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              {formik.touched.bloodGroup && formik.errors.bloodGroup ? (
+                <div className="text-red-500 text-xs">
+                  {formik.errors.bloodGroup}
+                </div>
+              ) : null}
+            </div>
+            <div className="grid grid-cols-2 items-center gap-4">
+              <Label htmlFor="phone">Phone Number</Label>
+              <Input
+                id="phone"
+                name="phone"
+                onChange={formik.handleChange}
+                value={formik.values.phone}
+              />
+              {formik.touched.phone && formik.errors.phone ? (
+                <div className="text-red-500 text-xs">
+                  {formik.errors.phone}
+                </div>
+              ) : null}
+            </div>
+            <div className="grid grid-cols-2 items-center gap-4">
+              <Label htmlFor="email">Email ID</Label>
+              <Input
+                id="email"
+                name="email"
+                onChange={formik.handleChange}
+                value={formik.values.email}
+              />
+              {formik.touched.email && formik.errors.email ? (
+                <div className="text-red-500 text-xs">
+                  {formik.errors.email}
+                </div>
+              ) : null}
+            </div>
           </div>
           <DialogFooter>
             <Button type="submit" disabled={formik.isSubmitting}>
