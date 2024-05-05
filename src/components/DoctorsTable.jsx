@@ -9,14 +9,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { EditIcon, DeleteIcon, FileText } from "lucide-react";
+import { EditIcon, DeleteIcon, CalendarCheck2 } from "lucide-react";
 import AddDoctor from "@/components/AddDoctor";
 import EditDoctor from "@/components/EditDoctor";
+import DoctorSlotsDialog from "./AddSchedule";
+
 export default function DoctorsTable() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [doctors, setDoctors] = useState([]);
   const [docId, setDocId] = useState("");
+  const [docSlot, setDocSlot] = useState(false);
 
   const deleteDoctor = (id) => async () => {
     console.log("delete", id);
@@ -106,14 +109,15 @@ export default function DoctorsTable() {
                     >
                       <DeleteIcon />
                     </Button>
-                    <Button 
+                    <Button
                       variant="icon"
                       className="text-green-500 hover:text-green-700"
                       onClick={() => {
-                        window.location.href = `/doctors/${doctor.id}`;
+                        setDocSlot(true);
+                        setDocId(doctor.id);
                       }}
                     >
-                      <FileText />
+                      <CalendarCheck2 />
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -128,13 +132,15 @@ export default function DoctorsTable() {
           </TableBody>
         </Table>
       </CardContent>
-      <AddDoctor
-        open={dialogOpen}
-        onClose={() => setDialogOpen(false)}
-      />
+      <AddDoctor open={dialogOpen} onClose={() => setDialogOpen(false)} />
       <EditDoctor
         open={editOpen}
         onClose={() => setEditOpen(false)}
+        doctorId={docId}
+      />
+      <DoctorSlotsDialog
+        open={docSlot}
+        onClose={() => setDocSlot(false)}
         doctorId={docId}
       />
     </Card>
