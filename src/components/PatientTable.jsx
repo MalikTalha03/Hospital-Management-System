@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { EditIcon, DeleteIcon, File } from "lucide-react";
 import AddPatientDialog from "@/components/AddpatientDialog";
 import EditPatientDialog from "./EditPatientDialog";
+import Image from "next/image";
 
 export default function PatientsTable() {
   const [dialogOpen, setDialogOpen] = useState(false);
