@@ -10,13 +10,13 @@ export const POST = async (req, { params }) => {
 
   try {
     const bucket = storage.bucket();
-    const fileRef = bucket.file(`ehr/${id}/${document.name}`); // Use originalFilename if available
+    const fileRef = bucket.file(`ehr/${id}/${document.name}`);  
 
-    const bufferStream = Readable.from(document.stream()); // Assuming the document object supports stream()
+    const bufferStream = Readable.from(document.stream()); 
 
     await fileRef.save(bufferStream, {
       metadata: {
-        contentType: document.type, // Make sure this is defined
+        contentType: document.type, 
       },
     });
 
@@ -25,7 +25,6 @@ export const POST = async (req, { params }) => {
       expires: "03-17-2025",
     });
 
-    // Update Firestore or your database as needed
     const ehrRef = db.collection("ehr").doc();
     await ehrRef.set({
       patientId: id,

@@ -1,4 +1,4 @@
-import { db } from "@/utils/db"; // Ensure the db config is correct
+import { db } from "@/utils/db"; 
 
 export const POST = async (req, res) => {
   try {
@@ -8,7 +8,6 @@ export const POST = async (req, res) => {
       .where("date", "==", date)
       .where("time", "==", time);
     const snapshot = await query.get();
-    //check if there are more than 2 appointments at the same time
     if (snapshot.size >= 2) {
       return new Response(
         "There are already 2 appointments at this time",
@@ -27,7 +26,6 @@ export const POST = async (req, res) => {
 
 export const GET = async (req, res) => {
   try {
-    //get all appointments
     const appointmentsRef = db.collection("appointments");
     const snapshot = await appointmentsRef.get();
     const appointments = [];

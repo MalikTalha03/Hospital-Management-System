@@ -1,21 +1,17 @@
-import { db } from '@/utils/db'; // Ensure you have this Firebase setup
+import { db } from '@/utils/db'; 
 import { hashPassword } from '@/utils/auth';
 
 const handler = async function POST(req) {
     try {
         const { email, password, name } = await req.json();
 
-        // Check if the user already exists
         const userRef = db.collection('users').where('email', '==', email);
         const snap = await userRef.get();
         if (!snap.empty) {
             return new Response('User already exists', { status: 403 });
         }
 
-        // Hash the password
         const hashedPassword = await hashPassword(password);
-
-        // Create the user document
         await db.collection('users').add({
             email,
             password: hashedPassword,

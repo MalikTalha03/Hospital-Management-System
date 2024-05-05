@@ -2,7 +2,7 @@ class User {
     constructor({ username, email, passwordHash }) {
         this.username = username;
         this.email = email;
-        this.passwordHash = passwordHash;  // Note: Storing passwords requires careful security considerations!
+        this.passwordHash = passwordHash;  
         this.createdAt = new Date();
     }
 
@@ -16,4 +16,3 @@ class User {
     }
 }
 
-// Usage would be similar to the Patient class

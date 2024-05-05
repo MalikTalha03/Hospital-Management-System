@@ -16,7 +16,6 @@ import axios from "axios";
 
 const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
-// Schema definition using zod
 const schema = z.object({
   days: z.array(z.string()).nonempty("At least one day must be selected"),
   slots: z.array(z.string()).nonempty("At least one slot must be selected")

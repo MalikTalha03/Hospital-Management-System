@@ -1,17 +1,17 @@
 'use client';
 import { useState, useEffect } from "react";
-import { useSession, signIn } from "next-auth/react";
-import { useRouter,useParams } from "next/navigation"; // Correct import path for useRouter
+import { useSession } from "next-auth/react";
+import { useRouter,useParams } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 import Loader from "@/components/Loader";
-import EHRTable from "@/components/EHRTable";  // Assuming this is the EHR table component
+import EHRTable from "@/components/EHRTable";  
 
 export default function MainComponent() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { data: session, status } = useSession();
   const router = useRouter();
   const params = useParams(); 
-  const { id } = params; // Correctly destructure the id from params
+  const { id } = params; 
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -27,7 +27,7 @@ export default function MainComponent() {
   }
 
   if (!session) {
-    return null; // The alert and redirection is handled in useEffect
+    return null; 
   }
 
   return (

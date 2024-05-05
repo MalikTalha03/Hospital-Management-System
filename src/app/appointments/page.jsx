@@ -14,7 +14,6 @@ export default function MainComponent() {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      // Show alert and redirect after 3 seconds
       alert(
         "Please log in to view this page. You will be redirected to the login page."
       );
@@ -29,7 +28,7 @@ export default function MainComponent() {
   }
 
   if (!session) {
-    return null; // The alert and redirection is handled in useEffect
+    return null; 
   }
 
   return (

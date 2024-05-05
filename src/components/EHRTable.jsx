@@ -54,7 +54,7 @@ export default function EHRTable({ patientId }) {
         });
         if (response.ok) {
           alert("Record deleted successfully.");
-          fetchEHRData(); // Refresh the list
+          fetchEHRData(); 
         } else {
           alert("Failed to delete the record.");
         }
@@ -115,7 +115,6 @@ export default function EHRTable({ patientId }) {
                     <Button
                       variant="icon"
                       className="text-green-500 hover:text-green-700"
-                      //open file on click
                       onClick={() => window.open(record.documentUrl, "_blank")}
                     >
                       <FileSpreadsheet size={20} />

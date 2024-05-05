@@ -17,7 +17,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-// Validation schema using yup
 const validationSchema = yup.object({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
@@ -31,7 +30,6 @@ export default function Signup() {
   const isLoading = status === 'loading';
 
   useEffect(() => {
-    // Redirect if there's a session and loading is done
     if (!isLoading && session) {
       router.push("/");
     }
@@ -76,7 +74,7 @@ export default function Signup() {
     },
   });
 
-  if (isLoading) return <div>Loading...</div>; // Display loading while session status is pending
+  if (isLoading) return <div>Loading...</div>; 
 
   return (
     <div className="flex items-center justify-center h-screen">

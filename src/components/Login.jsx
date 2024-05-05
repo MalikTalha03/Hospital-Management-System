@@ -33,7 +33,6 @@ export default function Login() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Redirect if there's a session and loading is done
     if (!isLoading && session) {
       router.push("/");
     }
@@ -46,7 +45,6 @@ export default function Login() {
     },
     validationSchema,
     onSubmit: async (values) => {
-      // Prevent form submission when data is loading or session is active
       if (isLoading || session) return;
 
       setLoading(true);
@@ -67,10 +65,8 @@ export default function Login() {
     },
   });
 
-  // Show loading state until hook conditions are stable
   if (isLoading) return <div>Loading...</div>;
   
-  // Return the login form if not loading and no session
   return (
     <div className="flex items-center justify-center h-screen">
       <Card className="mx-auto max-w-sm">
