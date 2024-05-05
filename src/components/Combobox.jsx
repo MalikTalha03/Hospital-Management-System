@@ -21,8 +21,8 @@ export function Combobox({ items, onChange, placeholder = "Select item..." }) {
 
   const handleSelect = (selectedValue) => {
     setValue(selectedValue);
-    onChange(selectedValue); // Ensuring that onChange updates formik or parent state
-    setOpen(false); // Close popover right after selection
+    onChange(selectedValue);
+    setOpen(false);
   };
 
   return (

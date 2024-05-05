@@ -4,7 +4,7 @@ export const PATCH = async (req, { params }) => {
   try {
     const { id } = params;
     const data = await req.json();
-    const docRef = db.collection('patients').doc(id);
+    const docRef = db.collection("patients").doc(id);
 
     await docRef.update(data);
     const updatedDoc = await docRef.get();
@@ -17,7 +17,7 @@ export const PATCH = async (req, { params }) => {
 export const GET = async (req, { params }) => {
   try {
     const { id } = params;
-    const docRef = db.collection('patients').doc(id);
+    const docRef = db.collection("patients").doc(id);
     const doc = await docRef.get();
 
     if (!doc.exists) {
@@ -33,7 +33,7 @@ export const GET = async (req, { params }) => {
 export const DELETE = async (req, { params }) => {
   try {
     const { id } = params;
-    await db.collection('patients').doc(id).delete();
+    await db.collection("patients").doc(id).delete();
 
     return new Response("Patient deleted successfully", { status: 200 });
   } catch (error) {

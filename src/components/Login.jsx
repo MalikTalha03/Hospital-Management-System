@@ -28,12 +28,11 @@ const validationSchema = yup.object({
 export default function Login() {
   const router = useRouter();
   const { data: session, status } = useSession();
-  const isLoading = status === 'loading';
+  const isLoading = status === "loading";
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Redirect if there's a session and loading is done
     if (!isLoading && session) {
       router.push("/");
     }
@@ -46,7 +45,6 @@ export default function Login() {
     },
     validationSchema,
     onSubmit: async (values) => {
-      // Prevent form submission when data is loading or session is active
       if (isLoading || session) return;
 
       setLoading(true);
@@ -67,10 +65,8 @@ export default function Login() {
     },
   });
 
-  // Show loading state until hook conditions are stable
   if (isLoading) return <div>Loading...</div>;
-  
-  // Return the login form if not loading and no session
+
   return (
     <div className="flex items-center justify-center h-screen">
       <Card className="mx-auto max-w-sm">
@@ -92,7 +88,9 @@ export default function Login() {
                 {...formik.getFieldProps("email")}
               />
               {formik.touched.email && formik.errors.email && (
-                <div className="text-red-500 text-sm">{formik.errors.email}</div>
+                <div className="text-red-500 text-sm">
+                  {formik.errors.email}
+                </div>
               )}
             </div>
             <div className="grid gap-2">
@@ -112,7 +110,9 @@ export default function Login() {
                 {...formik.getFieldProps("password")}
               />
               {formik.touched.password && formik.errors.password && (
-                <div className="text-red-500 text-sm">{formik.errors.password}</div>
+                <div className="text-red-500 text-sm">
+                  {formik.errors.password}
+                </div>
               )}
             </div>
             {error && <div className="text-red-500 text-sm">{error}</div>}

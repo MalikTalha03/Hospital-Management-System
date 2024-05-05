@@ -83,7 +83,7 @@ const EditDoctorDialog = ({ open, doctorId, onClose }) => {
           <DialogHeader>
             <DialogTitle>Edit Doctor</DialogTitle>
             <DialogDescription>
-              Update the details below to edit the doctor's information.
+              Update the details below to edit the doctor information.
             </DialogDescription>
           </DialogHeader>
           {loading ? (

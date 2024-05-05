@@ -13,7 +13,6 @@ export default function MainComponent() {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      // Show alert and redirect after 3 seconds
       alert(
         "Please log in to view this page. You will be redirected to the login page."
       );
@@ -28,7 +27,7 @@ export default function MainComponent() {
   }
 
   if (!session) {
-    return null; // The alert and redirection is handled in useEffect
+    return null;
   }
 
   return (
@@ -55,12 +54,11 @@ export default function MainComponent() {
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:relative md:translate-x-0`}
       >
-        <Sidebar activeItem={'Doctors'}/>
+        <Sidebar activeItem={"Doctors"} />
       </div>
 
       <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="flex justify-between items-center p-4 shadow-md">
-        </header>
+        <header className="flex justify-between items-center p-4 shadow-md"></header>
 
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
           <div className="container mx-auto px-6 py-8">

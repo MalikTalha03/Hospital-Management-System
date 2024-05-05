@@ -6,7 +6,6 @@ export const GET = async (req) => {
     const doctorId = url.searchParams.get("doctorId");
     const date = url.searchParams.get("date");
 
-    // Convert date to day of week as string
     const dayOfWeek = new Date(date).getDay();
     const days = [
       "Sunday",
@@ -19,14 +18,12 @@ export const GET = async (req) => {
     ];
     const day = days[dayOfWeek];
 
-    // Fetch appointments to find already booked slots
     const appointmentsQuery = db
       .collection("appointments")
       .where("doctorId", "==", doctorId)
       .where("date", "==", date);
     const appointmentsSnapshot = await appointmentsQuery.get();
 
-    // Count each slot booking
     const slotCounts = {};
     appointmentsSnapshot.docs.forEach((doc) => {
       const time = doc.data().time;
@@ -37,20 +34,17 @@ export const GET = async (req) => {
       }
     });
 
-    // Fetch the doctor's available days and slots
     const doctorRef = db.collection("doctors").doc(doctorId);
     const doctorDoc = await doctorRef.get();
     const availableDays = doctorDoc.data()?.availableDays || [];
     const availableSlots = [];
 
-    // Fetch slots only for the specific day and filter them based on bookings
     if (availableDays.includes(day)) {
       const slotsDoc = await doctorRef.collection("slots").doc(day).get();
       const slots = slotsDoc.data()?.slots || [];
 
       slots.forEach((slot) => {
         if (!(slotCounts[slot] && slotCounts[slot] >= 2)) {
-          // Ensure the slot is included only if booked less than 2 times
           availableSlots.push({ day, slot });
         }
       });

@@ -1,5 +1,4 @@
 "use client";
-// Import UI components from Shadcn UI
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useFormik } from "formik";
@@ -8,7 +7,7 @@ import * as yup from "yup";
 import { useRouter } from "next/navigation";
 
 function ForgotPassword() {
-    const router = useRouter();
+  const router = useRouter();
   const [step, setStep] = useState("emailInput");
   const [userEmail, setUserEmail] = useState("");
 
@@ -86,11 +85,16 @@ function ForgotPassword() {
               className="w-full px-3 py-2 border rounded"
               required
             />
-            <Button type="submit" className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <Button
+              type="submit"
+              className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
               Send Reset Link
             </Button>
             {formikEmail.errors.email && (
-              <div className="text-red-500 text-sm">{formikEmail.errors.email}</div>
+              <div className="text-red-500 text-sm">
+                {formikEmail.errors.email}
+              </div>
             )}
           </form>
         )}
@@ -117,11 +121,16 @@ function ForgotPassword() {
               className="w-full px-3 py-2 border rounded"
               required
             />
-            <Button type="submit" className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <Button
+              type="submit"
+              className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
               Change Password
             </Button>
             {formikReset.errors.submit && (
-              <div className="text-red-500 text-sm">{formikReset.errors.submit}</div>
+              <div className="text-red-500 text-sm">
+                {formikReset.errors.submit}
+              </div>
             )}
           </form>
         )}

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useFormik } from "formik";
@@ -17,7 +17,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-// Validation schema using yup
 const validationSchema = yup.object({
   firstName: yup.string().required("First name is required"),
   lastName: yup.string().required("Last name is required"),
@@ -28,10 +27,9 @@ const validationSchema = yup.object({
 export default function Signup() {
   const router = useRouter();
   const { data: session, status } = useSession();
-  const isLoading = status === 'loading';
+  const isLoading = status === "loading";
 
   useEffect(() => {
-    // Redirect if there's a session and loading is done
     if (!isLoading && session) {
       router.push("/");
     }
@@ -58,7 +56,7 @@ export default function Signup() {
             name: `${values.firstName} ${values.lastName}`,
           }),
         });
-        if(response.status == 403){
+        if (response.status == 403) {
           setErrors({ submit: "User already exists" });
           return;
         }
@@ -76,7 +74,7 @@ export default function Signup() {
     },
   });
 
-  if (isLoading) return <div>Loading...</div>; // Display loading while session status is pending
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="flex items-center justify-center h-screen">
@@ -99,7 +97,9 @@ export default function Signup() {
                   {...formik.getFieldProps("firstName")}
                 />
                 {formik.touched.firstName && formik.errors.firstName && (
-                  <div className="text-red-500 text-sm">{formik.errors.firstName}</div>
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.firstName}
+                  </div>
                 )}
               </div>
               <div className="grid gap-2">
@@ -111,7 +111,9 @@ export default function Signup() {
                   {...formik.getFieldProps("lastName")}
                 />
                 {formik.touched.lastName && formik.errors.lastName && (
-                  <div className="text-red-500 text-sm">{formik.errors.lastName}</div>
+                  <div className="text-red-500 text-sm">
+                    {formik.errors.lastName}
+                  </div>
                 )}
               </div>
             </div>
@@ -125,7 +127,9 @@ export default function Signup() {
                 {...formik.getFieldProps("email")}
               />
               {formik.touched.email && formik.errors.email && (
-                <div className="text-red-500 text-sm">{formik.errors.email}</div>
+                <div className="text-red-500 text-sm">
+                  {formik.errors.email}
+                </div>
               )}
             </div>
             <div className="grid gap-2">
@@ -137,7 +141,9 @@ export default function Signup() {
                 {...formik.getFieldProps("password")}
               />
               {formik.touched.password && formik.errors.password && (
-                <div className="text-red-500 text-sm">{formik.errors.password}</div>
+                <div className="text-red-500 text-sm">
+                  {formik.errors.password}
+                </div>
               )}
             </div>
             {formik.errors.submit && (
@@ -148,7 +154,9 @@ export default function Signup() {
               className="w-full"
               disabled={formik.isSubmitting}
             >
-              {formik.isSubmitting ? "Creating account..." : "Create an account"}
+              {formik.isSubmitting
+                ? "Creating account..."
+                : "Create an account"}
             </Button>
           </form>
           <div className="mt-4 text-center text-sm">

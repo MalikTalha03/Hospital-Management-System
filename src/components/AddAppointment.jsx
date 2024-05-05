@@ -14,7 +14,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Combobox } from "@/components/Combobox"; // Ensure this component is properly imported
+import { Combobox } from "@/components/Combobox";
 import { Select } from "@/components/ui/select";
 
 const validationSchema = yup.object({
@@ -80,7 +80,10 @@ const AddAppointmentDialog = ({ open, onClose }) => {
         })
         .then((response) =>
           setTimeSlots(
-            response.data.map((slot) => ({ label: slot.slot, value: slot.slot }))
+            response.data.map((slot) => ({
+              label: slot.slot,
+              value: slot.slot,
+            }))
           )
         )
         .catch(() => setTimeSlots([]));
@@ -126,10 +129,11 @@ const AddAppointmentDialog = ({ open, onClose }) => {
                     <Label htmlFor="timeSlot">Time Slot</Label>
                     <Combobox
                       items={timeSlots}
-                      onChange={(value) => formik.setFieldValue("timeSlot", value)}
+                      onChange={(value) =>
+                        formik.setFieldValue("timeSlot", value)
+                      }
                       placeholder="Select a time slot"
                     />
-                    
                   </>
                 )}
               </>

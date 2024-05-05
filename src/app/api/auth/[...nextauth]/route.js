@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { db } from "@/utils/db";  // Ensure you have this path set up correctly
+import { db } from "@/utils/db";
 import { verifyPassword } from "@/utils/auth";
 
 const handler = NextAuth({
@@ -10,7 +10,9 @@ const handler = NextAuth({
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
-        const userRef = db.collection('users').where('email', '==', credentials.email);
+        const userRef = db
+          .collection("users")
+          .where("email", "==", credentials.email);
         const userDoc = await userRef.get();
 
         if (userDoc.empty) {
@@ -18,12 +20,15 @@ const handler = NextAuth({
         }
 
         const user = userDoc.docs[0].data();
-        const isValid = await verifyPassword(credentials.password, user.password);
+        const isValid = await verifyPassword(
+          credentials.password,
+          user.password
+        );
         if (!isValid) {
           throw new Error("Could not log you in!");
         }
 
-        return { email: user.email, id: userDoc.docs[0].id };  // Include ID for session management
+        return { email: user.email, id: userDoc.docs[0].id };
       },
     }),
   ],
@@ -39,9 +44,9 @@ const handler = NextAuth({
   },
   callbacks: {
     async session({ session, token }) {
-      session.user.id = token.uid;  // Assuming token.uid is the user's ID
+      session.user.id = token.uid;
       if (token.email) {
-        session.user.email = token.email;  // Optionally add more user details to the session
+        session.user.email = token.email;
       }
       return session;
     },

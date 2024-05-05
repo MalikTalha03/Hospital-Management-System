@@ -10,13 +10,13 @@ export const POST = async (req, { params }) => {
 
   try {
     const bucket = storage.bucket();
-    const fileRef = bucket.file(`ehr/${id}/${document.name}`); // Use originalFilename if available
+    const fileRef = bucket.file(`ehr/${id}/${document.name}`);
 
-    const bufferStream = Readable.from(document.stream()); // Assuming the document object supports stream()
+    const bufferStream = Readable.from(document.stream());
 
     await fileRef.save(bufferStream, {
       metadata: {
-        contentType: document.type, // Make sure this is defined
+        contentType: document.type,
       },
     });
 
@@ -25,7 +25,6 @@ export const POST = async (req, { params }) => {
       expires: "03-17-2025",
     });
 
-    // Update Firestore or your database as needed
     const ehrRef = db.collection("ehr").doc();
     await ehrRef.set({
       patientId: id,
@@ -36,11 +35,13 @@ export const POST = async (req, { params }) => {
       createdAt: new Date(),
     });
 
-    return new Response(JSON.stringify({ message: "EHR record created successfully" }), {
-      status: 201,
-      headers: { "Content-Type": "application/json" },
-    });
-
+    return new Response(
+      JSON.stringify({ message: "EHR record created successfully" }),
+      {
+        status: 201,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,

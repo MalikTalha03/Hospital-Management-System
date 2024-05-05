@@ -8,10 +8,9 @@ const handler = async function handler(req, res) {
 
   try {
     const { email } = await req.json();
-    
-    // Check if the user exists in Firestore
-    const usersRef = db.collection('users');
-    const snapshot = await usersRef.where('email', '==', email).get();
+
+    const usersRef = db.collection("users");
+    const snapshot = await usersRef.where("email", "==", email).get();
     if (!snapshot.empty) {
       return new Response("User already exists", { status: 403 });
     }
@@ -20,6 +19,6 @@ const handler = async function handler(req, res) {
     console.error(error);
     return new Response(error.message, { status: 500 });
   }
-}
+};
 
 export { handler as post };

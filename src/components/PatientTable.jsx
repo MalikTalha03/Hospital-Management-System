@@ -27,8 +27,7 @@ export default function PatientsTable() {
       });
       if (response.ok) {
         alert("Patient deleted successfully");
-      }
-      else {
+      } else {
         alert("Failed to delete the patient ", error);
       }
       fetchPatients();
@@ -85,7 +84,7 @@ export default function PatientsTable() {
               patients.map((patient) => (
                 <TableRow key={patient.id}>
                   <TableCell>
-                    <img
+                    <Image
                       src={patient.image}
                       alt={patient.name}
                       className="w-10 h-10 rounded-full"
@@ -115,7 +114,7 @@ export default function PatientsTable() {
                     >
                       <DeleteIcon />
                     </Button>
-                    <Button 
+                    <Button
                       variant="icon"
                       className="text-green-500 hover:text-green-700"
                       onClick={() => {
