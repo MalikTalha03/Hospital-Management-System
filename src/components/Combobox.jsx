@@ -21,8 +21,8 @@ export function Combobox({ items, onChange, placeholder = "Select item..." }) {
 
   const handleSelect = (selectedValue) => {
     setValue(selectedValue);
-    onChange(selectedValue); 
-    setOpen(false); 
+    onChange(selectedValue);
+    setOpen(false);
   };
 
   return (

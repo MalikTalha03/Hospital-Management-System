@@ -1,4 +1,4 @@
-import { db } from "@/utils/db"; 
+import { db } from "@/utils/db";
 
 export const POST = async (req, res) => {
   try {
@@ -9,10 +9,9 @@ export const POST = async (req, res) => {
       .where("time", "==", time);
     const snapshot = await query.get();
     if (snapshot.size >= 2) {
-      return new Response(
-        "There are already 2 appointments at this time",
-        { status: 400 }
-      );
+      return new Response("There are already 2 appointments at this time", {
+        status: 400,
+      });
     }
     const docRef = db.collection("appointments").doc();
     await docRef.set({ patientId, doctorId, date, time });

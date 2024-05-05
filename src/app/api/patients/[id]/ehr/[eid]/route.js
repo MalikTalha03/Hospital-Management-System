@@ -1,7 +1,7 @@
-import { storage,db } from "@/utils/db";
+import { storage, db } from "@/utils/db";
 
 export const DELETE = async (req, { params }) => {
-  const { id, eid } = params; 
+  const { id, eid } = params;
 
   try {
     const docRef = db.collection("ehr").doc(eid);
@@ -12,7 +12,7 @@ export const DELETE = async (req, { params }) => {
     }
 
     const documentUrl = doc.data().documentUrl;
-    const fileName = documentUrl.split('/').pop().split('?')[0]; 
+    const fileName = documentUrl.split("/").pop().split("?")[0];
 
     const fileRef = storage.bucket().file(`ehr/${id}/${fileName}`);
 
@@ -20,17 +20,18 @@ export const DELETE = async (req, { params }) => {
 
     await docRef.delete();
 
-    return new Response(JSON.stringify({ message: "EHR record deleted successfully" }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" }
-    });
+    return new Response(
+      JSON.stringify({ message: "EHR record deleted successfully" }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (error) {
     console.error("Failed to delete EHR record:", error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json" },
     });
   }
 };
-
-

@@ -18,7 +18,7 @@ const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
 const schema = z.object({
   days: z.array(z.string()).nonempty("At least one day must be selected"),
-  slots: z.array(z.string()).nonempty("At least one slot must be selected")
+  slots: z.array(z.string()).nonempty("At least one slot must be selected"),
 });
 
 const DoctorSlotsDialog = ({ open, onClose, doctorId }) => {
@@ -47,7 +47,10 @@ const DoctorSlotsDialog = ({ open, onClose, doctorId }) => {
   const onCheckboxChange = (name, value) => {
     const currentValues = getValues(name);
     if (currentValues.includes(value)) {
-      setValue(name, currentValues.filter(v => v !== value));
+      setValue(
+        name,
+        currentValues.filter((v) => v !== value)
+      );
     } else {
       setValue(name, [...currentValues, value]);
     }
@@ -62,12 +65,15 @@ const DoctorSlotsDialog = ({ open, onClose, doctorId }) => {
       setValue("days", []);
       setValue("slots", []);
       daysOfWeek.forEach((day) => {
-        document.getElementById(`day-${daysOfWeek.indexOf(day)}`).checked = false;
+        document.getElementById(
+          `day-${daysOfWeek.indexOf(day)}`
+        ).checked = false;
       });
       allSlots.forEach((slot) => {
-        document.getElementById(`slot-${allSlots.indexOf(slot)}`).checked = false;
+        document.getElementById(
+          `slot-${allSlots.indexOf(slot)}`
+        ).checked = false;
       });
-
     } catch (error) {
       alert("Failed to update slots: " + error.message);
     }
@@ -77,7 +83,7 @@ const DoctorSlotsDialog = ({ open, onClose, doctorId }) => {
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Manage Doctor's Slots</DialogTitle>
+          <DialogTitle>Manage Doctor Slots</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 gap-4 p-4">

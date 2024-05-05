@@ -54,7 +54,7 @@ export default function EHRTable({ patientId }) {
         });
         if (response.ok) {
           alert("Record deleted successfully.");
-          fetchEHRData(); 
+          fetchEHRData();
         } else {
           alert("Failed to delete the record.");
         }

@@ -28,7 +28,7 @@ export default function MainComponent() {
   }
 
   if (!session) {
-    return null; 
+    return null;
   }
 
   return (

@@ -10,13 +10,13 @@ export const POST = async (req, { params }) => {
 
   try {
     const bucket = storage.bucket();
-    const fileRef = bucket.file(`ehr/${id}/${document.name}`);  
+    const fileRef = bucket.file(`ehr/${id}/${document.name}`);
 
-    const bufferStream = Readable.from(document.stream()); 
+    const bufferStream = Readable.from(document.stream());
 
     await fileRef.save(bufferStream, {
       metadata: {
-        contentType: document.type, 
+        contentType: document.type,
       },
     });
 
@@ -35,11 +35,13 @@ export const POST = async (req, { params }) => {
       createdAt: new Date(),
     });
 
-    return new Response(JSON.stringify({ message: "EHR record created successfully" }), {
-      status: 201,
-      headers: { "Content-Type": "application/json" },
-    });
-
+    return new Response(
+      JSON.stringify({ message: "EHR record created successfully" }),
+      {
+        status: 201,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,

@@ -1,4 +1,4 @@
-import { db } from "@/utils/db"; 
+import { db } from "@/utils/db";
 
 const handler = async function POST(req, res) {
   try {
@@ -22,7 +22,7 @@ const handler = async function POST(req, res) {
       fee,
       phone,
       email,
-      createdAt: new Date(), 
+      createdAt: new Date(),
     };
 
     const docRef = await doctorsRef.add(newDoctor);

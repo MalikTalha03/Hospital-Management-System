@@ -1,14 +1,14 @@
-import admin from 'firebase-admin';
+import admin from "firebase-admin";
 
 if (!admin.apps.length) {
-    const serviceAccount = JSON.parse(process.env.FIREBASE_SDK_JSON);
+  const serviceAccount = JSON.parse(process.env.FIREBASE_SDK_JSON);
 
-    admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
-        storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-    });
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  });
 
-    console.log('Firebase Admin initialized');
+  console.log("Firebase Admin initialized");
 }
 
 export const db = admin.firestore();

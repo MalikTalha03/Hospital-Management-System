@@ -28,7 +28,7 @@ const validationSchema = yup.object({
 export default function Login() {
   const router = useRouter();
   const { data: session, status } = useSession();
-  const isLoading = status === 'loading';
+  const isLoading = status === "loading";
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -66,7 +66,7 @@ export default function Login() {
   });
 
   if (isLoading) return <div>Loading...</div>;
-  
+
   return (
     <div className="flex items-center justify-center h-screen">
       <Card className="mx-auto max-w-sm">
@@ -88,7 +88,9 @@ export default function Login() {
                 {...formik.getFieldProps("email")}
               />
               {formik.touched.email && formik.errors.email && (
-                <div className="text-red-500 text-sm">{formik.errors.email}</div>
+                <div className="text-red-500 text-sm">
+                  {formik.errors.email}
+                </div>
               )}
             </div>
             <div className="grid gap-2">
@@ -108,7 +110,9 @@ export default function Login() {
                 {...formik.getFieldProps("password")}
               />
               {formik.touched.password && formik.errors.password && (
-                <div className="text-red-500 text-sm">{formik.errors.password}</div>
+                <div className="text-red-500 text-sm">
+                  {formik.errors.password}
+                </div>
               )}
             </div>
             {error && <div className="text-red-500 text-sm">{error}</div>}
