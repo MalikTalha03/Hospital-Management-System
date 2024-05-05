@@ -42,7 +42,7 @@ export default function MainComponent() {
       </button>
 
       <div className={`fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 ease-out transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:relative md:translate-x-0`}>
-        <Sidebar />
+        <Sidebar activeItem={'Patients'} />
       </div>
 
       <div className="flex-1 flex flex-col overflow-hidden">
