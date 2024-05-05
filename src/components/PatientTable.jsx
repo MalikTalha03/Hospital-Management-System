@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { EditIcon, DeleteIcon, File } from "lucide-react";
 import AddPatientDialog from "@/components/AddpatientDialog";
 import EditPatientDialog from "./EditPatientDialog";
-import Image from "next/image";
 
 export default function PatientsTable() {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -85,11 +84,7 @@ export default function PatientsTable() {
               patients.map((patient) => (
                 <TableRow key={patient.id}>
                   <TableCell>
-                    <Image
-                      src={patient.image}
-                      alt={patient.name}
-                      className="w-10 h-10 rounded-full"
-                    />
+                    
                   </TableCell>
                   <TableCell>{patient.name}</TableCell>
                   <TableCell>{patient.age}</TableCell>
