@@ -1,9 +1,7 @@
 import NextAuth from "next-auth";
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-import { connectToDatabase } from "@/utils/db";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { db } from "@/utils/db";  // Ensure you have this path set up correctly
 import { verifyPassword } from "@/utils/auth";
-import { User } from "@/models/user";
-import CredentialsProvider from "next-auth/providers/credentials"; // Correct import
 
 const handler = NextAuth({
   session: {
@@ -12,19 +10,20 @@ const handler = NextAuth({
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
-        await connectToDatabase();
-        const user = await User.findOne({ email: credentials.email }).exec();
+        const userRef = db.collection('users').where('email', '==', credentials.email);
+        const userDoc = await userRef.get();
 
-        if (!user) {
+        if (userDoc.empty) {
           throw new Error("No user found!");
         }
 
+        const user = userDoc.docs[0].data();
         const isValid = await verifyPassword(credentials.password, user.password);
         if (!isValid) {
           throw new Error("Could not log you in!");
         }
 
-        return { email: user.email };
+        return { email: user.email, id: userDoc.docs[0].id };  // Include ID for session management
       },
     }),
   ],
@@ -40,9 +39,9 @@ const handler = NextAuth({
   },
   callbacks: {
     async session({ session, token }) {
-      session.user.id = token.uid; // Assuming token.uid is the user's ID
+      session.user.id = token.uid;  // Assuming token.uid is the user's ID
       if (token.email) {
-        session.user.email = token.email; // Optionally add more user details to the session
+        session.user.email = token.email;  // Optionally add more user details to the session
       }
       return session;
     },

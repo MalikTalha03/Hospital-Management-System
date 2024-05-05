@@ -1,28 +1,31 @@
-import mongoose from 'mongoose';
-import { User } from '@/models/user';
+import { db } from '@/utils/db'; // Ensure you have this Firebase setup
 import { hashPassword } from '@/utils/auth';
-import { connectToDatabase } from '@/utils/db';
-
 
 const handler = async function POST(req) {
-    await connectToDatabase(); // Ensure connection before proceeding
-
     try {
         const { email, password, name } = await req.json();
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
+
+        // Check if the user already exists
+        const userRef = db.collection('users').where('email', '==', email);
+        const snap = await userRef.get();
+        if (!snap.empty) {
             return new Response('User already exists', { status: 403 });
         }
+
+        // Hash the password
         const hashedPassword = await hashPassword(password);
-        const user = new User({
+
+        // Create the user document
+        await db.collection('users').add({
             email,
             password: hashedPassword,
             name,
+            createdAt: new Date()
         });
-        await user.save();
+
         return new Response('User created successfully', { status: 201 });
     } catch (error) {
-        console.log(error)
+        console.log(error);
         return new Response(error.message, { status: 500 });
     }
 }

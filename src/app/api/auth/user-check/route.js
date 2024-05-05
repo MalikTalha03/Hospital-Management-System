@@ -1,35 +1,25 @@
-import { connectToDatabase } from "@/utils/db";
-import { User } from "@/models/user";
+import { db } from "@/utils/db";
 
 const handler = async function handler(req, res) {
-  if (req.method === "POST") {
-    try {
-      await connectToDatabase();
-      const { email } = await req.json();
-      const existingUser = await User.findOne({
-        email,
-      });
-      if (existingUser) {
-        return new Response("User already exists", {
-          status: 200,
-        });
-      }
-      return new Response("User Not Found", {
-        status: 404,
-      });
-    } catch (error) {
-      console.log(error);
-      return new Response(error.message, {
-        status: 500,
-      });
+  if (req.method !== "POST") {
+    res.setHeader("Allow", "POST");
+    return new Response("Method Not Allowed", { status: 405 });
+  }
+
+  try {
+    const { email } = await req.json();
+    
+    // Check if the user exists in Firestore
+    const usersRef = db.collection('users');
+    const snapshot = await usersRef.where('email', '==', email).get();
+    if (!snapshot.empty) {
+      return new Response("User already exists", { status: 403 });
     }
-  } else {
-    var response = new Response("Method Not Allowed", {
-      status: 405,
-    });
-    response.headers.set("Allow", ["POST"]);
-    return response;
+    return new Response("User does not exist", { status: 404 });
+  } catch (error) {
+    console.error(error);
+    return new Response(error.message, { status: 500 });
   }
 }
 
-export { handler as POST}
+export { handler as post };
