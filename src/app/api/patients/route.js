@@ -1,4 +1,4 @@
-import { db } from '@/utils/db';  // Make sure Firebase is correctly initialized
+import { db } from '@/utils/db';  
 
 const handler = async function GET() {
   try {

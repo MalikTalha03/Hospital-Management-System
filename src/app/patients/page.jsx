@@ -55,7 +55,7 @@ export default function MainComponent() {
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:relative md:translate-x-0`}
       >
-        <Sidebar />
+        <Sidebar activeItem={'Patients'}/>
       </div>
 
       <div className="flex-1 flex flex-col overflow-hidden">
