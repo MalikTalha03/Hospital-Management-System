@@ -101,12 +101,6 @@ export default function EHRTable({ patientId }) {
                   <TableCell>
                     <Button
                       variant="icon"
-                      className="text-blue-500 hover:text-blue-700"
-                    >
-                      <EditIcon size={20} />
-                    </Button>
-                    <Button
-                      variant="icon"
                       className="text-red-500 hover:text-red-700"
                       onClick={() => deleteRecord(record.eid)}
                     >
@@ -115,7 +109,7 @@ export default function EHRTable({ patientId }) {
                     <Button
                       variant="icon"
                       className="text-green-500 hover:text-green-700"
-                      onClick={() => window.open(record.documentUrl, "_blank")}
+                      onClick={() => window.open(record.fileUrl, "_blank")}
                     >
                       <FileSpreadsheet size={20} />
                     </Button>

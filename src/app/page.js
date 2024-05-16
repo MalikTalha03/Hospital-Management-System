@@ -11,7 +11,6 @@ export default function Home() {
         <a
           href="/patients"
           className={styles.card}
-          target="_blank"
           rel="noopener noreferrer"
         >
           <h2>
@@ -23,7 +22,6 @@ export default function Home() {
         <a
           href="/doctors"
           className={styles.card}
-          target="_blank"
           rel="noopener noreferrer"
         >
           <h2>
@@ -35,7 +33,6 @@ export default function Home() {
         <a
           href="/appointments"
           className={styles.card}
-          target="_blank"
           rel="noopener noreferrer"
         >
           <h2>
